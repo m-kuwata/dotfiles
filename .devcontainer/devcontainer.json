@@ -1,0 +1,47 @@
+{
+  // devcontainerの名前（VS Code上で表示される）
+  "name": "Claude Code with MCP",
+  
+  // ベースとなるDockerイメージ（Ubuntu環境）
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu",
+  
+  // 自動でインストールする機能・ツール
+  "features": {
+    // Node.js v20をインストール（Claude Code実行に必要）
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    // Git（バージョン管理）
+    "ghcr.io/devcontainers/features/git:1": {},
+    // GitHub CLI（GitHub操作用）
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  
+  // ホストの環境変数をコンテナに転送
+  "remoteEnv": {
+    // ホストのGITHUB_PERSONAL_ACCESS_TOKENをコンテナ内でも使用可能に
+    "GITHUB_PERSONAL_ACCESS_TOKEN": "${localEnv:GITHUB_PERSONAL_ACCESS_TOKEN}"
+  },
+  
+  // コンテナ作成後に実行されるコマンド
+  "postCreateCommand": "npm install -g @anthropic-ai/claude-code && chmod +x /home/vscode/.dotfiles/container-setup-env.sh && /home/vscode/.dotfiles/container-setup-env.sh",
+  
+  // ホストのファイルをコンテナにマウント
+  "mounts": [
+    // 個別に必要な設定ファイルを正しい場所にマウント
+    "source=${localWorkspaceFolder}/.claude.json,target=/home/vscode/.claude.json,type=bind",
+    // その他のdotfilesも必要に応じて追加
+    "source=${localWorkspaceFolder},target=/home/vscode/.dotfiles,type=bind"
+  ],
+  
+  // VS Codeの設定
+  "customizations": {
+    "vscode": {
+      // 自動でインストールするVS Code拡張機能
+      "extensions": [
+        // リモートコンテナ拡張機能
+        "ms-vscode-remote.remote-containers"
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+# Secrets
+.claude.secrets.json
+*.secret
+*.secrets.*
+.serena

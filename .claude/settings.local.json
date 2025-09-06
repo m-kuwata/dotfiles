@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp add:*)",
+      "Bash(claude doctor)",
+      "Read(C:\\Users\\ao/**)",
+      "Bash(claude mcp enable github)",
+      "Bash(claude mcp:*)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "Bash(npm install:*)",
+      "Read(C:\\Users\\ao/**)",
+      "Bash(mklink:*)",
+      "Bash(ln:*)",
+      "Bash(readlink:*)",
+      "Bash(cmd //c:*)",
+      "Bash(gh auth:*)",
+      "mcp__github-official__search_repositories",
+      "Bash(powershell:*)",
+      "Read(//home/vscode/**)",
+      "Bash(npm search:*)",
+      "Bash(uvx:*)",
+      "Bash(MCP_TIMEOUT=120000 claude mcp list)",
+      "Read(//c/Users/ao/**)",
+      "Bash(cmd /c:*)",
+      "Bash(npx @modelcontextprotocol/server-github:*)",
+      "Bash(python3:*)",
+      "mcp__ide__executeCode",
+      "Bash(where uvx)",
+      "Bash(echo $PATH)",
+      "mcp__serena__check_onboarding_performed",
+      "mcp__serena__activate_project",
+      "mcp__serena__onboarding",
+      "mcp__serena__list_dir",
+      "mcp__serena__get_symbols_overview",
+      "mcp__serena__write_memory"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "serena"
+  ]
+}
