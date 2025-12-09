@@ -1,3 +1,29 @@
 {
-  
+  "github-official": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["@modelcontextprotocol/server-github"],
+    "env": {}
+  },
+  "serena": {
+    "type": "stdio",
+    "command": "uvx",
+    "args": [
+      "--from",
+      "git+https://github.com/oraios/serena",
+      "serena",
+      "start-mcp-server",
+      "--context",
+      "ide-assistant"
+    ],
+    "env": {
+      "PATH": "${PATH};${USERPROFILE}\\.local\\bin"
+    }
+  },
+  "playwright": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["@playwright/mcp@latest"],
+    "env": {}
+  }
 }

@@ -30,6 +30,7 @@
   "mounts": [
     // 個別に必要な設定ファイルを正しい場所にマウント
     "source=${localWorkspaceFolder}/.claude.json,target=/home/vscode/.claude.json,type=bind",
+    "source=${localWorkspaceFolder}/.mcp.json,target=/home/vscode/.mcp.json,type=bind",
     // その他のdotfilesも必要に応じて追加
     "source=${localWorkspaceFolder},target=/home/vscode/.dotfiles,type=bind"
   ],

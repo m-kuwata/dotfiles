@@ -1,0 +1,16 @@
+tap "homebrew/core"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+
+brew "zsh"
+brew "starship"
+brew "fzf"
+brew "eza"
+brew "zoxide"
+brew "git"
+brew "node"
+brew "python"
+brew "ripgrep"
+brew "bat"
+
+cask "font-jetbrainsmono-nerd-font"
