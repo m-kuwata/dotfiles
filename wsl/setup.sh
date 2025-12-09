@@ -11,6 +11,7 @@ echo "🔗 Linking zsh..."
 
 mkdir -p $HOME/.config/zsh
 ln -snf $DOTFILES_DIR/wsl/zsh/.zshrc $HOME/.zshrc
+ln -snf $DOTFILES_DIR/wsl/zsh/.zshenv $HOME/.zshenv
 
 # --- starship ---
 echo "🔗 Linking starship..."

@@ -18,4 +18,6 @@ config.font_size = 14.0
 -- タブを下に表示（デフォルトでは上にある）
 config.tab_bar_at_bottom = true
 
+config.default_domain = 'WSL:Ubuntu-24.04'
+
 return config

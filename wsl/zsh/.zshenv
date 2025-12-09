@@ -1,0 +1,1 @@
+echo 'source ~/.zshrc' > ~/.zshenv
