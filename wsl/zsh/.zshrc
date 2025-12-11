@@ -8,4 +8,4 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 # alias 読み込み
-source ~/dotfiles/zsh/alias.zsh
+source ~/dotfiles/wsl/zsh/alias.zsh
