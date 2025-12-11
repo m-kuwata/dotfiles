@@ -1,7 +1,5 @@
-tap "homebrew/core"
-tap "homebrew/cask"
-tap "homebrew/cask-fonts"
-
+brew "lazygit"
+brew "lazydocker"
 brew "zsh"
 brew "starship"
 brew "fzf"
@@ -12,5 +10,3 @@ brew "node"
 brew "python"
 brew "ripgrep"
 brew "bat"
-
-cask "font-jetbrainsmono-nerd-font"
