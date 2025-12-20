@@ -1,5 +1,6 @@
 -- Pull in the wezterm API
 local wezterm = require 'wezterm'
+local act = wezterm.action
 
 -- This table will hold the configuration.
 local config = {}
@@ -17,6 +18,8 @@ end
 config.automatically_reload_config = true
 -- デフォルトシェル
 config.default_domain = 'WSL:Ubuntu-24.04'
+-- 閉じる時の確認ダイアログを出さない
+config.window_close_confirmation = "NeverPrompt"
 
 ----------------------------------------------------
 -- Tab
@@ -41,6 +44,28 @@ config.show_tabs_in_tab_bar = true
 config.tab_bar_at_bottom = true
 
 ----------------------------------------------------
+-- UI
+----------------------------------------------------
+wezterm.on("update-status", function(window, pane)
+  if window:leader_is_active() then
+    -- Leader押下中（Which-Key風）
+    window:set_right_status(
+      wezterm.format({
+        { Foreground = { Color = "#f5c2e7" } },
+        { Text = " ⌨ LEADER " },
+        { Foreground = { Color = "#a6e3a1" } },
+        { Text = " | Split: |  - " },
+        { Foreground = { Color = "#89b4fa" } },
+        { Text = " | Move: h j k l " },
+      })
+    )
+  else
+    -- 通常時
+    window:set_right_status(" ")
+  end
+end)
+
+----------------------------------------------------
 -- font
 ----------------------------------------------------
 -- フォントファミリー
@@ -52,6 +77,15 @@ config.font_size = 14.0
 ----------------------------------------------------
 -- keybinds
 ----------------------------------------------------
+config.leader = { key = "a", mods = "CTRL" }
 
+config.keys = {
+  { key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal },
+  { key = "-", mods = "LEADER",        action = act.SplitVertical },
+  { key = "h", mods = "LEADER",        action = act.ActivatePaneDirection("Left") },
+  { key = "l", mods = "LEADER",        action = act.ActivatePaneDirection("Right") },
+  { key = "j", mods = "LEADER",        action = act.ActivatePaneDirection("Down") },
+  { key = "k", mods = "LEADER",        action = act.ActivatePaneDirection("Up") },
+}
 
 return config
