@@ -77,7 +77,7 @@ config.font_size = 14.0
 ----------------------------------------------------
 -- keybinds
 ----------------------------------------------------
-config.leader = { key = "a", mods = "CTRL" }
+config.leader = { key = "w", mods = "CTRL" }
 
 config.keys = {
   { key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal },
@@ -89,3 +89,4 @@ config.keys = {
 }
 
 return config
+
