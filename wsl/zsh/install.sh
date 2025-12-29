@@ -4,6 +4,36 @@ set -e
 
 echo "🔥 Starting dotfiles install..."
 
+
+# -------------------------
+# System packages (WSL)
+# -------------------------
+echo "🛠 Installing system build tools..."
+sudo apt update
+sudo apt install -y \
+  build-essential \
+  clang \
+  cmake \
+  pkg-config \
+  wget \
+  imagemagick \
+  ghostscript
+
+npm install -g @mermaid-js/mermaid-cli
+
+# -------------------------
+# win32yank
+# -------------------------
+if ! command -v win32yank.exe >/dev/null; then
+  mkdir -p ~/.local/bin
+  cd ~/.local/bin 
+  wget https://github.com/equalsraf/win32yank/releases/download/v0.1.1/win32yank-x64.zip
+  unzip ./win32yank-x64.zip
+  chmod +x ~/.local/bin/win32yank.exe
+  cd ~ 
+fi
+
+
 # -------------------------
 # Homebrew install
 # -------------------------

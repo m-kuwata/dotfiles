@@ -19,5 +19,9 @@ echo "🔗 Linking starship..."
 mkdir -p $HOME/.config
 ln -snf $DOTFILES_DIR/wsl/starship/starship.toml $HOME/.config/starship.toml
 
+# --- lazynvim ---
+echo "🔗 Linking lazynvim..."
+ln -snf $DOTFILES_DIR/wsl/nvim $HOME/.config/nvim
+
 echo "✨ セットアップ完了！！"
-echo "🎉 zsh と starship の設定をいい感じにリンクしたよ！"
+echo "🎉 zsh と starship と lazynvimの設定をいい感じにリンクしたよ！"
