@@ -17,7 +17,8 @@ sudo apt install -y \
   pkg-config \
   wget \
   imagemagick \
-  ghostscript
+  ghostscript \
+  python3
 
 npm install -g @mermaid-js/mermaid-cli
 
@@ -33,20 +34,19 @@ if ! command -v win32yank.exe >/dev/null; then
   cd ~ 
 fi
 
-
 # -------------------------
 # Homebrew install
 # -------------------------
 if ! command -v brew >/dev/null 2>&1; then
   echo "🍺 Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew
 fi
 
 echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo "🍺 Running brew bundle..."
-brew bundle --file=~/dotfiles/wsl/Brewfile
+HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file=~/dotfiles/wsl/Brewfile --verbose
 
 # -------------------------
 # Symlinks
