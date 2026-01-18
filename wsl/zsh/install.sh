@@ -10,6 +10,13 @@ else
   SUDO=""
 fi
 
+is_wsl() {
+  grep -qi microsoft /proc/version 2>/dev/null
+}
+
+is_docker() {
+  [ -f /.dockerenv ] || grep -qa docker /proc/1/cgroup 2>/dev/null
+}
 
 # -------------------------
 # System packages (WSL)
@@ -29,15 +36,21 @@ $SUDO apt install -y \
 npm install -g @mermaid-js/mermaid-cli
 
 # -------------------------
-# win32yank
+# win32yank (WSL only)
 # -------------------------
-if ! command -v win32yank.exe >/dev/null; then
-  mkdir -p ~/.local/bin
-  cd ~/.local/bin 
-  wget https://github.com/equalsraf/win32yank/releases/download/v0.1.1/win32yank-x64.zip
-  unzip ./win32yank-x64.zip
-  chmod +x ~/.local/bin/win32yank.exe
-  cd ~ 
+if is_wsl && ! is_docker; then
+  if ! command -v win32yank.exe >/dev/null 2>&1; then
+    echo "📋 Installing win32yank (WSL)..."
+    mkdir -p ~/.local/bin
+    (
+      cd ~/.local/bin
+      wget -q https://github.com/equalsraf/win32yank/releases/download/v0.1.1/win32yank-x64.zip
+      unzip -o win32yank-x64.zip
+      chmod +x win32yank.exe
+    )
+  fi
+else
+  echo "⏭ Skipping win32yank (not WSL or running in Docker)"
 fi
 
 # -------------------------
