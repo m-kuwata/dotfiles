@@ -4,13 +4,19 @@ set -e
 
 echo "🔥 Starting dotfiles install..."
 
+if command -v sudo >/dev/null 2>&1; then
+  SUDO=sudo
+else
+  SUDO=""
+fi
+
 
 # -------------------------
 # System packages (WSL)
 # -------------------------
 echo "🛠 Installing system build tools..."
-sudo apt update
-sudo apt install -y \
+$SUDO apt update
+$SUDO apt install -y \
   build-essential \
   clang \
   cmake \
