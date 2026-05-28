@@ -26,7 +26,7 @@ Claude CodeのMCPサーバ設定を含む個人用dotfilesです。
 
 ### 3. ファイル構成
 
-- `.claude.json` - Claude Codeの設定（MCP含む）
+- `.claude.json` - Claude Codeの設定
 - `.devcontainer/devcontainer.json` - devcontainer設定
 - `setup-env.ps1` - 環境変数セットアップスクリプト
 - `.gitignore` - 機密情報を除外
