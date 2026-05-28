@@ -1,6 +1,6 @@
 # Dotfiles
 
-Claude CodeのMCPサーバ設定を含む個人用dotfilesです。
+Claude CodeのMCPサーバ設定を含む個人用dotfilesです
 
 ## セットアップ
 
