@@ -14,3 +14,5 @@ brew "navi"
 brew "neovim"
 brew "fd"
 brew "tree-sitter-cli"
+brew "gh"
+

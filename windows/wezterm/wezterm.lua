@@ -1,5 +1,5 @@
 -- Pull in the wezterm API
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
 local act = wezterm.action
 
 -- This table will hold the configuration.
@@ -8,7 +8,7 @@ local config = {}
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
 if wezterm.config_builder then
-    config = wezterm.config_builder()
+	config = wezterm.config_builder()
 end
 
 ----------------------------------------------------
@@ -17,7 +17,7 @@ end
 -- コンフィグ自動反映（Ctrl+Shift+R）
 config.automatically_reload_config = true
 -- デフォルトシェル
-config.default_domain = 'WSL:Ubuntu-24.04'
+config.default_domain = "WSL:Ubuntu-24.04"
 -- 閉じる時の確認ダイアログを出さない
 config.window_close_confirmation = "NeverPrompt"
 
@@ -47,22 +47,30 @@ config.tab_bar_at_bottom = true
 -- UI
 ----------------------------------------------------
 wezterm.on("update-status", function(window, pane)
-  if window:leader_is_active() then
-    -- Leader押下中（Which-Key風）
-    window:set_right_status(
-      wezterm.format({
-        { Foreground = { Color = "#f5c2e7" } },
-        { Text = " ⌨ LEADER " },
-        { Foreground = { Color = "#a6e3a1" } },
-        { Text = " | Split: |  - " },
-        { Foreground = { Color = "#89b4fa" } },
-        { Text = " | Move: h j k l " },
-      })
-    )
-  else
-    -- 通常時
-    window:set_right_status(" ")
-  end
+	if window:leader_is_active() then
+		-- Leader押下中（Which-Key風）
+		window:set_right_status(wezterm.format({
+			{ Foreground = { Color = "#f5c2e7" } },
+			{ Text = " ⌨ LEADER " },
+			{ Foreground = { Color = "#a6e3a1" } },
+			{ Text = " | Split: |  - " },
+			{ Foreground = { Color = "#89b4fa" } },
+			{ Text = " | Move: h j k l " },
+		}))
+	else
+		-- 通常時
+		window:set_right_status(" ")
+	end
+end)
+
+wezterm.on("update-right-status", function(window, pane)
+	local workspace = window:active_workspace()
+
+	if window:leader_is_active() then
+		window:set_right_status("⌨ LEADER | 🚀 " .. workspace)
+	else
+		window:set_right_status("🚀 " .. workspace)
+	end
 end)
 
 ----------------------------------------------------
@@ -80,13 +88,12 @@ config.font_size = 14.0
 config.leader = { key = "w", mods = "CTRL" }
 
 config.keys = {
-  { key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal },
-  { key = "-", mods = "LEADER",        action = act.SplitVertical },
-  { key = "h", mods = "LEADER",        action = act.ActivatePaneDirection("Left") },
-  { key = "l", mods = "LEADER",        action = act.ActivatePaneDirection("Right") },
-  { key = "j", mods = "LEADER",        action = act.ActivatePaneDirection("Down") },
-  { key = "k", mods = "LEADER",        action = act.ActivatePaneDirection("Up") },
+	{ key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal },
+	{ key = "-", mods = "LEADER", action = act.SplitVertical },
+	{ key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+	{ key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+	{ key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+	{ key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
 }
 
 return config
-

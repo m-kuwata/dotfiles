@@ -1,3 +1,6 @@
+# PATH for claude
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
 # PATH for Homebrew (Linuxbrew & mac both work)
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 

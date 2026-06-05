@@ -33,7 +33,7 @@ $SUDO apt install -y \
   ghostscript \
   python3
 
-npm install -g @mermaid-js/mermaid-cli
+# npm install -g @mermaid-js/mermaid-cli
 
 # -------------------------
 # win32yank (WSL only)
@@ -61,7 +61,7 @@ if ! command -v brew >/dev/null 2>&1; then
   git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew
 fi
 
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.profile
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo "🍺 Running brew bundle..."
