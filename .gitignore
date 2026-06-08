@@ -2,6 +2,12 @@
 .claude.secrets.json
 *.secret
 *.secrets.*
+
+# Claude Code
+.claude.json
+.claude/
+.mcp.json
+
+# Tools
 .serena
 .playwright-mcp
-.claude.json

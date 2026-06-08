@@ -1,0 +1,66 @@
+% git, branch
+
+# ブランチを作成して移動
+git switch -c <branch_name>
+
+# ブランチを削除（マージ済み）
+git branch -d <branch_name>
+
+# ブランチを強制削除
+git branch -D <branch_name>
+
+# リモートブランチをローカルに持ってくる
+git switch -t origin/<remote_branch>
+
+$ branch_name: git branch --format '%(refname:short)'
+$ remote_branch: git branch -r --format '%(refname:lstrip=3)'
+
+% git, stash
+
+# 変更を名前付きで退避
+git stash push -m "<message>"
+
+# stash を適用して削除
+git stash pop
+
+# stash を適用（削除しない）
+git stash apply <stash>
+
+# stash 一覧
+git stash list
+
+$ stash: git stash list --format '{{.name}}' 2>/dev/null || git stash list | awk -F: '{print $1}'
+
+% git, log
+
+# コミット履歴をグラフ表示
+git log --oneline --graph --all
+
+# 特定ファイルの変更履歴
+git log --oneline --follow <file>
+
+# 差分付きで直近 n 件表示
+git log -p -<n>
+
+$ file: fd --type f
+
+% git, rebase
+
+# 直近 n 件のコミットをまとめる
+git rebase -i HEAD~<n>
+
+# main を取り込む
+git rebase origin/main
+
+% git, misc
+
+# 直前のコミットメッセージを修正
+git commit --amend --no-edit
+
+# 変更をなかったことにして HEAD に戻す
+git restore <file>
+
+# ステージングを取り消す
+git restore --staged <file>
+
+$ file: git diff --name-only HEAD

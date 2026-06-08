@@ -33,7 +33,10 @@
       "mcp__serena__onboarding",
       "mcp__serena__list_dir",
       "mcp__serena__get_symbols_overview",
-      "mcp__serena__write_memory"
+      "mcp__serena__write_memory",
+      "WebFetch(domain:zenn.dev)",
+      "Bash(git mv *)",
+      "Bash(git rm *)"
     ],
     "deny": [],
     "ask": []

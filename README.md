@@ -1,31 +1,56 @@
 # Dotfiles
 
-Claude CodeのMCPサーバ設定を含む個人用dotfilesです
+個人用dotfilesです。WSL2 + WezTermの環境をセットアップします。
 
 ## セットアップ
 
-### 1. 環境変数の設定
+### Linux（WSL / Docker）
 
-```powershell
-# PowerShellで実行
-.\setup-env.ps1
+```bash
+git clone https://github.com/m-kuwata/dotfiles ~/dotfiles
+cd ~/dotfiles
+make linux
 ```
 
-または手動で：
-```powershell
-[System.Environment]::SetEnvironmentVariable('GITHUB_PERSONAL_ACCESS_TOKEN', 'your_token_here', 'User')
+Homebrew・各種CLIツール・シンボリックリンクが一括でセットアップされます。
+DockerコンテナとWSL2の両方で動作します（WSL固有のツールは自動でスキップされます）。
+
+### Windows（WezTerm設定）
+
+WSLのターミナルから実行:
+
+```bash
+cd ~/dotfiles
+make windows
 ```
 
-### 2. devcontainerでの使用
+> **注意: シンボリックリンク作成には以下のどちらかが必要です**
+>
+> - Windows の Developer Mode を有効化（設定 → システム → 開発者向け）← 推奨
+> - または管理者権限の PowerShell から直接実行:
+>   ```powershell
+>   cd C:\Users\<ユーザー名>\dotfiles
+>   .\windows\setup.ps1
+>   ```
 
-このdotfilesリポジトリには`.devcontainer/devcontainer.json`が含まれています。
+## ファイル構成
 
-- 環境変数は自動的にdevcontainer内に転送されます
-- Claude Codeが自動的にインストールされます
-- `.claude.json`設定がマウントされます
-
-### 3. ファイル構成
-
-- `.claude.json` - Claude Codeの設定
-- `.devcontainer/devcontainer.json` - devcontainer設定
-- `setup-env.ps1` - 環境変数セットアップスクリプト
+```
+dotfiles/
+├── Makefile               # make linux / make windows
+├── linux/
+│   ├── install.sh         # パッケージインストール（apt, brew等）
+│   ├── link.sh            # シンボリックリンク作成
+│   ├── Brewfile           # Homebrewパッケージ一覧
+│   ├── zsh/
+│   │   ├── .zshenv        # 環境変数
+│   │   ├── .zshrc         # zsh設定
+│   │   └── alias.zsh      # エイリアス
+│   ├── starship/          # Starship設定
+│   ├── nvim/              # Neovim設定（LazyVim）
+│   └── navi/              # naviチートシート
+└── windows/
+    ├── setup.ps1          # WezTermシンボリックリンク作成
+    └── wezterm/
+        └── wezterm.lua    # WezTerm設定
+```

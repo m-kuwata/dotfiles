@@ -1,0 +1,54 @@
+% gh, pr
+
+# PR 一覧
+gh pr list
+
+# PR を作成（ブラウザで開く）
+gh pr create --web
+
+# PR をターミナルで作成
+gh pr create --title "<title>" --body "<body>"
+
+# PR をチェックアウト
+gh pr checkout <pr_number>
+
+# PR の差分を確認
+gh pr diff <pr_number>
+
+# PR を承認
+gh pr review <pr_number> --approve
+
+# PR をマージ
+gh pr merge <pr_number> --squash
+
+# CI の状態を確認
+gh pr checks <pr_number>
+
+$ pr_number: gh pr list --json number,title --jq '.[] | "\(.number)\t\(.title)"' | awk '{print $1}'
+
+% gh, issue
+
+# issue 一覧
+gh issue list
+
+# issue を作成
+gh issue create --title "<title>"
+
+# issue をブラウザで開く
+gh issue view <issue_number> --web
+
+$ issue_number: gh issue list --json number,title --jq '.[] | "\(.number)\t\(.title)"' | awk '{print $1}'
+
+% gh, repo
+
+# リポジトリをブラウザで開く
+gh repo view --web
+
+# リポジトリをクローン
+gh repo clone <repo>
+
+# Actions のワークフロー一覧
+gh workflow list
+
+# 最新の Actions 実行結果を確認
+gh run list --limit 5

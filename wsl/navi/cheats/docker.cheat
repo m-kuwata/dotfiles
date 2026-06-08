@@ -1,4 +1,0 @@
-% test
-#test
-echo <mapped>
-$ mapped: printf "%s\n" a b c

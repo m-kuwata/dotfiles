@@ -33,11 +33,11 @@ function fe() {
 
 # プロジェクトのTODOを一覧表示
 function todo() {
-  rg -i "todo|fixme|hack" --type js --type ts --type tsx
+  rg -i "todo|fixme|hack" "${@}"
 }
 
 # alias
-source ~/dotfiles/wsl/zsh/alias.zsh
+source "$DOTFILES_DIR/wsl/zsh/alias.zsh"
 
 # PATH
 export PATH="$HOME/.local/bin:$PATH"

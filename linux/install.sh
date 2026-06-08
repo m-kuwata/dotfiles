@@ -58,22 +58,13 @@ fi
 # -------------------------
 if ! command -v brew >/dev/null 2>&1; then
   echo "🍺 Installing Homebrew..."
-  git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.profile
+grep -qF 'brew shellenv' ~/.profile 2>/dev/null || echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.profile
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo "🍺 Running brew bundle..."
-HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file=~/dotfiles/wsl/Brewfile --verbose
-
-# -------------------------
-# Symlinks
-# -------------------------
-echo "🔗 Creating symlinks..."
-
-ln -sf ~/dotfiles/wsl/zsh/.zshrc ~/.zshrc
-mkdir -p ~/.config
-ln -sf ~/dotfiles/wsl/starship/starship.toml ~/.config/starship.toml
+HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file=~/dotfiles/linux/Brewfile --verbose
 
 echo "🎉 Done! Restart your terminal!"

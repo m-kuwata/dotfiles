@@ -1,0 +1,54 @@
+% docker, container
+
+# コンテナ一覧（起動中）
+docker ps
+
+# コンテナ一覧（全て）
+docker ps -a
+
+# コンテナに入る（bash）
+docker exec -it <container> bash
+
+# コンテナのログをリアルタイムで流す
+docker logs -f <container>
+
+# コンテナを停止
+docker stop <container>
+
+# コンテナを削除
+docker rm <stopped_container>
+
+$ container: docker ps --format '{{.Names}}'
+$ stopped_container: docker ps -a --format '{{.Names}}'
+
+% docker, image
+
+# イメージ一覧
+docker images
+
+# イメージをビルド
+docker build -t <tag> .
+
+# 不要なイメージを一括削除
+docker image prune -a
+
+$ tag: docker images --format '{{.Repository}}:{{.Tag}}'
+
+% docker, compose
+
+# バックグラウンドで起動
+docker compose up -d
+
+# 停止してコンテナを削除
+docker compose down
+
+# ログをリアルタイムで流す
+docker compose logs -f <service>
+
+# 特定サービスのコンテナに入る
+docker compose exec <service> bash
+
+# 設定を確認
+docker compose config
+
+$ service: docker compose config --services
