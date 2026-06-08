@@ -37,7 +37,7 @@ function todo() {
 }
 
 # alias
-source "$DOTFILES_DIR/wsl/zsh/alias.zsh"
+source "$DOTFILES_DIR/linux/zsh/alias.zsh"
 
 # PATH
 export PATH="$HOME/.local/bin:$PATH"

@@ -2,6 +2,8 @@
 
 set -e
 
+DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
 echo "🔥 Starting dotfiles install..."
 
 if command -v sudo >/dev/null 2>&1; then
@@ -65,6 +67,6 @@ grep -qF 'brew shellenv' ~/.profile 2>/dev/null || echo 'eval "$(/home/linuxbrew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo "🍺 Running brew bundle..."
-HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file=~/dotfiles/linux/Brewfile --verbose
+HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file="$DOTFILES_DIR/linux/Brewfile" --verbose
 
 echo "🎉 Done! Restart your terminal!"
