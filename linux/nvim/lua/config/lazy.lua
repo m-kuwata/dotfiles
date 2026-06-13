@@ -14,8 +14,28 @@ vim.opt.rtp:prepend(lazypath)
 
 -- LazyVim
 require("lazy").setup({
-	{
-		"LazyVim/LazyVim",
-		import = "lazyvim.plugins",
+	spec = {
+		-- LazyVim core and its plugins
+		{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
+		-- Local plugin specs (lua/plugins/*.lua)
+		{ import = "plugins" },
+	},
+	defaults = {
+		version = false,
+	},
+	install = { colorscheme = { "tokyonight", "habamax" } },
+	-- Automatically check for plugin updates (without intrusive notifications)
+	checker = { enabled = true, notify = false },
+	performance = {
+		rtp = {
+			-- Disable some built-in rtp plugins to speed up startup
+			disabled_plugins = {
+				"gzip",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
 	},
 })
