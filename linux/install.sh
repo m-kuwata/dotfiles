@@ -63,6 +63,8 @@ if ! command -v brew >/dev/null 2>&1; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+# The single-quoted string is written verbatim to ~/.profile on purpose.
+# shellcheck disable=SC2016
 grep -qF 'brew shellenv' ~/.profile 2>/dev/null || echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.profile
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
