@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # Level 1 (shell) + Level 2: syntax check and lint for *.sh scripts.
+  shell:
+    name: Shell (syntax + shellcheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: bash -n (syntax check)
+        run: |
+          set -e
+          for f in $(git ls-files '*.sh'); do
+            echo "checking $f"
+            bash -n "$f"
+          done
+
+      - name: shellcheck
+        run: |
+          # shellcheck is preinstalled on ubuntu-latest runners.
+          shellcheck --version
+          shellcheck $(git ls-files '*.sh')
+
+  # Level 1 (lua syntax) + Level 3: validate the Neovim config.
+  neovim:
+    name: Neovim (lua syntax + startup)
+    runs-on: ubuntu-latest
+    env:
+      # Point Neovim at this repo's config (linux/nvim) instead of ~/.config.
+      XDG_CONFIG_HOME: ${{ github.workspace }}/linux
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Neovim (stable)
+        run: |
+          set -e
+          cd /tmp
+          base="https://github.com/neovim/neovim/releases/download/stable"
+          # The release asset was renamed over time; try the current name first.
+          if curl -fsSLO "$base/nvim-linux-x86_64.tar.gz"; then
+            tar xzf nvim-linux-x86_64.tar.gz
+            echo "/tmp/nvim-linux-x86_64/bin" >> "$GITHUB_PATH"
+          else
+            curl -fsSLO "$base/nvim-linux64.tar.gz"
+            tar xzf nvim-linux64.tar.gz
+            echo "/tmp/nvim-linux64/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Verify Neovim
+        run: nvim --version
+
+      - name: Lua syntax check (all *.lua, no plugins required)
+        run: |
+          cat > /tmp/lua_syntax_check.lua <<'LUA'
+          local errors = 0
+          local files = vim.fn.globpath('.', '**/*.lua', false, true)
+          for _, f in ipairs(files) do
+            local chunk, err = loadfile(f)
+            if not chunk then
+              errors = errors + 1
+              io.stderr:write('SYNTAX ERROR: ' .. f .. ': ' .. err .. '\n')
+            end
+          end
+          if errors > 0 then
+            os.exit(1)
+          end
+          print(('checked %d lua files, all OK'):format(#files))
+          LUA
+          nvim --clean -l /tmp/lua_syntax_check.lua
+
+      - name: Cache lazy.nvim plugins
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/nvim
+          key: lazy-${{ hashFiles('linux/nvim/lazy-lock.json') }}
+          restore-keys: |
+            lazy-
+
+      - name: Startup check (install plugins + load full config)
+        run: |
+          set -e
+          # First run bootstraps lazy.nvim and installs all plugins (needs network).
+          nvim --headless "+Lazy! sync" +qa
+          # Second run loads the full config; capture any output to inspect for errors.
+          nvim --headless +qa 2>&1 | tee /tmp/nvim-startup.log
+          # Fail only on genuine Lua/Vimscript errors, not on plugin-manager chatter.
+          if grep -E 'E5113|Error detected|Error executing|stack traceback' /tmp/nvim-startup.log; then
+            echo "::error::Neovim reported errors while loading the config"
+            exit 1
+          fi
+          echo "Neovim loaded the config cleanly."
